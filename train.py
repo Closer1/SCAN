@@ -40,7 +40,7 @@ def main():
                         help='Rank loss margin.')
     parser.add_argument('--num_epochs', default=30, type=int,
                         help='Number of training epochs.')
-    parser.add_argument('--batch_size', default=128, type=int,
+    parser.add_argument('--batch_size', default=64, type=int,
                         help='Size of a training mini-batch.')
     parser.add_argument('--word_dim', default=300, type=int,
                         help='Dimensionality of the word embedding.')
@@ -58,7 +58,7 @@ def main():
                         help='Number of data loader workers.')
     parser.add_argument('--log_step', default=10, type=int,
                         help='Number of steps to print and record the log.')
-    parser.add_argument('--val_step', default=500, type=int,
+    parser.add_argument('--val_step', default=1000, type=int,
                         help='Number of steps to run validation.')
     parser.add_argument('--logger_name', default='./runs/runX/log',
                         help='Path to save Tensorboard log.')
