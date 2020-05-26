@@ -67,7 +67,7 @@ class LogCollector(object):
         """Concatenate the meters in one log line
         """
         s = ''
-        for i, (k, v) in enumerate(self.meters.iteritems()):
+        for i, (k, v) in enumerate(self.meters.items()):
             if i > 0:
                 s += '  '
             s += k + ' ' + str(v)
@@ -76,7 +76,7 @@ class LogCollector(object):
     def tb_log(self, tb_logger, prefix='', step=None):
         """Log using tensorboard
         """
-        for k, v in self.meters.iteritems():
+        for k, v in self.meters.items():
             tb_logger.log_value(prefix + k, v.val, step=step)
 
 
@@ -267,8 +267,8 @@ def shard_xattn_t2i(images, captions, caplens, opt, shard_size=128):
         for j in range(n_cap_shard):
             sys.stdout.write('\r>> shard_xattn_t2i batch (%d,%d)' % (i,j))
             cap_start, cap_end = shard_size*j, min(shard_size*(j+1), len(captions))
-            im = Variable(torch.from_numpy(images[im_start:im_end]), volatile=True).cuda()
-            s = Variable(torch.from_numpy(captions[cap_start:cap_end]), volatile=True).cuda()
+            im = torch.from_numpy(images[im_start:im_end]).cuda()
+            s = torch.from_numpy(captions[cap_start:cap_end]).cuda()
             l = caplens[cap_start:cap_end]
             sim = xattn_score_t2i(im, s, l, opt)
             d[im_start:im_end, cap_start:cap_end] = sim.data.cpu().numpy()
@@ -289,8 +289,8 @@ def shard_xattn_i2t(images, captions, caplens, opt, shard_size=128):
         for j in range(n_cap_shard):
             sys.stdout.write('\r>> shard_xattn_i2t batch (%d,%d)' % (i,j))
             cap_start, cap_end = shard_size*j, min(shard_size*(j+1), len(captions))
-            im = Variable(torch.from_numpy(images[im_start:im_end]), volatile=True).cuda()
-            s = Variable(torch.from_numpy(captions[cap_start:cap_end]), volatile=True).cuda()
+            im = torch.from_numpy(images[im_start:im_end]).cuda()
+            s = torch.from_numpy(captions[cap_start:cap_end]).cuda()
             l = caplens[cap_start:cap_end]
             sim = xattn_score_i2t(im, s, l, opt)
             d[im_start:im_end, cap_start:cap_end] = sim.data.cpu().numpy()
